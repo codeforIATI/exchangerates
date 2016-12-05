@@ -1,12 +1,12 @@
 import csv
 import zipfile
 
-fp = 'data/FX_csv_2.zip'
+fp = 'data/INTLFXD_csv_2.zip'
 outfp = 'data/consolidated.csv'
 writer = csv.writer(open(outfp, 'w'))
 writer.writerow(['Date', 'Rate', 'Currency', 'Frequency'])
 zfo = zipfile.ZipFile(fp)
-fo = zfo.open('FX_csv_2/README_SERIES_ID_SORT.txt')
+fo = zfo.open('INTLFXD_csv_2/README_SERIES_ID_SORT.txt')
 
 def run_all_files():
     start = False
@@ -70,12 +70,13 @@ iso_codes = {
     # New Zealand
     'New': 'NZD',
     'U.K': 'GBP',
+    'U.K.': 'GBP',
     'Euro': 'EUR',
     'Ireland': 'IEP'
     }
 
 def extract(id_, country, freq):
-    fp = 'FX_csv_2/data/%s' % id_
+    fp = 'INTLFXD_csv_2/data/%s' % id_
     fo = zfo.open(fp)
     reader = csv.reader(fo)
     reader.next()
@@ -86,3 +87,4 @@ def extract(id_, country, freq):
 
 
 run_all_files()
+
