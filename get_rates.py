@@ -102,4 +102,5 @@ def update_rates(out_filename):
     get_oecd_rates(outfp, writer)
     outfp_f.close()
 
-update_rates('data/consolidated_TEST.csv')
+if __name__ == "__main__":
+    update_rates('data/consolidated_rates.csv')
