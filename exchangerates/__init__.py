@@ -37,7 +37,7 @@ class CurrencyConverter(object):
             """
             if self.source == False:
                 resource_package = __name__
-                resource_path = '/'.join(('data', 'consolidated_rates.csv'))
+                resource_path = 'consolidated_rates.csv'
                 source = pkg_resources.resource_filename(resource_package, resource_path)
             
             if update == True:
@@ -58,7 +58,7 @@ class CurrencyConverter(object):
             rates_dates = {}
             for row in rates_list:
                 append_path(rates_dates, (row[2],
-                    { make_date_from_iso(row[0]): row[1] } ))
+                    { make_date_from_iso(row[0]): float(row[1]) } ))
             currencies_dates = dict(map(lambda currency: 
                             (currency, sorted(list(rates_dates[currency]))), 
                             rates_dates.keys()))
