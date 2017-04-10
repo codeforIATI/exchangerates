@@ -81,6 +81,7 @@ def extract(id_, country, freq):
     reader = csv.reader(fo)
     reader.next()
     for row in reader:
+        if row[1] == ".": continue
         outrow = row + [iso_codes[country], freq]
         writer.writerow(outrow)
     fo.close()
