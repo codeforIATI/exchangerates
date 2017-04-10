@@ -1,19 +1,32 @@
-Code for producing consolidated historical exchange rate data from the St Louis Federal Reserve.
+A module to make it easier to handle historical exchange rates.
+
+Currently combines daily rates from the St Louis Federal Reserve with monthly rates from the OECD.
 
 See also <http://thedatahub.org/dataset/exchange-rates>
 
 Instructions
 ============
 
-Run the script:
+Create a CurrencyConverter object:
 
-    ./get_parse_rates.sh
+    import exchangerates
+    converter = exchangerates.CurrencyConverter(update=True)
+    
+Note: `update=True` will lead to fresh exchange rates being downloaded.
 
-This will get the source data dumps into the data/ directory and run the Python script to generate consolidated data. This bash script is designed to be run as a cron job.
+Get a list of the available currencies:
 
-Or if you have the data already downloaded then run:
+    print converter.known_currencies()
+    
+Get the conversion rate for a specific currency and date:
+    
+    print converter.closest_rate("USD", datetime.date(2012,7,20))
+    print converter.closest_rate("EUR", datetime.date(2014,7,20))
+    print converter.closest_rate("EUR", datetime.date(2014,7,20))
 
-    python run.py
+You can also just generate a consolidated file of exchange rates:
 
-Result will be at data/consolidated.csv.
+    python get_rates.py
+
+Result will be at `data/consolidated_rates_.csv`.
 
