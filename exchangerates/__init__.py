@@ -2,6 +2,7 @@ from bisect import bisect_left
 import csv
 import datetime
 import get_rates
+import pkg_resources
 
 class UnknownCurrencyException(Exception):
     pass
@@ -29,13 +30,18 @@ def take_closest(myList, myNumber):
        return before
 
 class CurrencyConverter(object):
-    def __init__(self, update=False, source="data/consolidated_rates.csv"):
+    def __init__(self, update=False, source=False):
         def load_rates():
             """
             Read CSV file as generator function
             """
+            if self.source == False:
+                resource_package = __name__
+                resource_path = '/'.join(('data', 'consolidated_rates.csv'))
+                source = pkg_resources.resource_filename(resource_package, resource_path)
+            
             if update == True:
-                get_rates.update_rates("data/consolidated_rates.csv")
+                get_rates.update_rates(source)
             with open(source, "rU") as data:
                 csv_reader = csv.reader(data)
                 csv_reader.next()
@@ -58,6 +64,7 @@ class CurrencyConverter(object):
                             rates_dates.keys()))
             return currencies_dates, rates_dates
         
+        self.source = source
         self.currencies_dates, self.dates_rates = make_rates(load_rates())
 
     def known_currencies(self):
