@@ -6,6 +6,10 @@ See also <http://thedatahub.org/dataset/exchange-rates>
 
 ## Instructions
 
+Install from PyPI:
+
+    pip install exchangerates
+
 Create a CurrencyConverter object:
 
     import exchangerates
