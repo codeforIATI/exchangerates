@@ -24,7 +24,7 @@ def get_fred_rates(outfp, writer):
             outrow = row + [fred_countries_currencies[country], freq, "FRED"]
             writer.writerow(outrow)
         fo.close()
-    
+
     def read_files(zfo):
         fo = zfo.open('INTLFXD_csv_2/README_SERIES_ID_SORT.txt')
         for line in fo.readlines():
@@ -45,6 +45,7 @@ def get_fred_rates(outfp, writer):
     zfo = zipfile.ZipFile(StringIO.StringIO(r.content))
     read_files(zfo)
 
+
 def get_oecd_rates(outfp, writer):
     def make_date(value):
         return datetime.datetime.strptime(value, "%Y-%m-%d")
@@ -56,12 +57,12 @@ def get_oecd_rates(outfp, writer):
         indata = list(map(lambda row: row, reader))
         outfp_file.close()
 
-        currencies = dict(map(lambda currency: 
-                              (currency, None), 
+        currencies = dict(map(lambda currency:
+                              (currency, None),
                   list(set(map(lambda row: row["Currency"], indata)))))
 
         for currency in currencies:
-            currency_dates = list(map(lambda y: 
+            currency_dates = list(map(lambda y:
                       make_date(y["Date"]),
                     filter(lambda x: x['Currency'] == currency, indata)
             ))
@@ -73,24 +74,25 @@ def get_oecd_rates(outfp, writer):
         r = requests.get(OECD_RATES, stream=True)
         fp_doc = etree.fromstring(r.content)
         nsmap = {
-        "ns":"http://www.SDMX.org/resources/SDMXML/schemas/v2_0/generic"
+            "ns": "http://www.SDMX.org/resources/SDMXML/schemas/v2_0/generic"
         }
         series = fp_doc.findall("ns:DataSet/ns:Series", namespaces=nsmap)
         for serie in series:
             currency = serie.find("ns:SeriesKey/ns:Value[@concept='LOCATION']", namespaces=nsmap).get("value")
-    
+
             min_currency_date = currencies_dates.get(
-                oecd_countries_currencies.get(currency), 
+                oecd_countries_currencies.get(currency),
                 datetime.datetime.utcnow())
-    
+
             for obs in serie.findall("ns:Obs", namespaces=nsmap):
                 date = "{}-01".format(obs.find("ns:Time", namespaces=nsmap).text)
                 value = obs.find("ns:ObsValue", namespaces=nsmap).get("value")
                 if make_date(date) < min_currency_date:
                     writer.writerow([date, value, oecd_countries_currencies.get(currency), "M", "OECD"])
-            
+
     currencies_dates = get_earliest_dates()
     get_OECD_data(writer, currencies_dates)
+
 
 def update_rates(out_filename):
     outfp = out_filename
@@ -103,6 +105,7 @@ def update_rates(out_filename):
     writer = csv.writer(outfp_f)
     get_oecd_rates(outfp, writer)
     outfp_f.close()
+
 
 if __name__ == "__main__":
     update_rates('data/consolidated_rates.csv')

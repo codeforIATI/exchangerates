@@ -9,6 +9,7 @@ from . import get_rates
 class UnknownCurrencyException(Exception):
     pass
 
+
 def make_date_from_iso(iso_str):
     return datetime.date(int(iso_str[:4]), int(iso_str[5:7]),
                             int(iso_str[8:10]))
@@ -66,7 +67,7 @@ class CurrencyConverter(object):
                             (currency, sorted(list(rates_dates[currency]))), 
                             rates_dates.keys()))
             return currencies_dates, rates_dates
-        
+
         self.source = source
         self.currencies_dates, self.dates_rates = make_rates(load_rates())
 
@@ -78,12 +79,12 @@ class CurrencyConverter(object):
         Accepts a list with (currency, date)
         returns currency, date, conversion date, exchange rate
         """
-        if currency == u"USD": 
-            return { "closest_date": date, "conversion_rate": 1.0 }
+        if currency == u"USD":
+            return {"closest_date": date, "conversion_rate": 1.0}
         try:
             the_date = take_closest(self.currencies_dates[currency], date)
             return {
-                "closest_date": the_date, 
+                "closest_date": the_date,
                 "conversion_rate": self.dates_rates[currency][the_date]
             }
         except KeyError:
