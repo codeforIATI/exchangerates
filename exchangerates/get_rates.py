@@ -1,7 +1,10 @@
 import csv
 import zipfile
 import requests
-import StringIO, datetime, re
+import StringIO
+import datetime
+import re
+
 from lxml import etree
 
 from .util import fred_countries_currencies, oecd_countries_currencies
