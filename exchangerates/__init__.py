@@ -63,12 +63,15 @@ class CurrencyConverter(object):
             def append_path(root, paths):
                 root.setdefault(paths[0], {})
                 root[paths[0]].update(paths[1])
+                return root
+
             rates_dates = {}
             for row in rates_list:
-                append_path(rates_dates, (row[2],
-                    { make_date_from_iso(row[0]): float(row[1]) } ))
-            currencies_dates = dict(map(lambda currency: 
-                            (currency, sorted(list(rates_dates[currency]))), 
+                rates_dates = append_path(
+                    rates_dates,
+                    (row[2], {make_date_from_iso(row[0]): float(row[1])}))
+            currencies_dates = dict(map(lambda currency:
+                            (currency, sorted(list(rates_dates[currency]))),
                             rates_dates.keys()))
             return currencies_dates, rates_dates
 
