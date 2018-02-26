@@ -1,8 +1,10 @@
 from bisect import bisect_left
 import csv
 import datetime
-import get_rates
 import pkg_resources
+
+from . import get_rates
+
 
 class UnknownCurrencyException(Exception):
     pass

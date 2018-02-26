@@ -3,7 +3,9 @@ import zipfile
 import requests
 import StringIO, datetime, re
 from lxml import etree
-from util import fred_countries_currencies, oecd_countries_currencies
+
+from .util import fred_countries_currencies, oecd_countries_currencies
+
 
 FRED_RATES = "https://fred.stlouisfed.org/categories/94/downloaddata/INTLFXD_csv_2.zip"
 OECD_RATES = "http://stats.oecd.org/restsdmx/sdmx.ashx/GetData/MEI_FIN/CCUS.AUS+AUT+BEL+CAN+CHL+CZE+DNK+EST+FIN+FRA+DEU+GRC+HUN+ISL+IRL+ISR+ITA+JPN+KOR+LVA+LUX+MEX+NLD+NZL+NOR+POL+PRT+SVK+SVN+ESP+SWE+CHE+TUR+GBR+USA+EA19+SDR+NMEC+BRA+CHN+COL+CRI+IND+IDN+RUS+ZAF.M/all?startTime=1950-01"
