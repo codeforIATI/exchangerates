@@ -11,8 +11,11 @@ class UnknownCurrencyException(Exception):
 
 
 def make_date_from_iso(iso_str):
-    return datetime.date(int(iso_str[:4]), int(iso_str[5:7]),
-                            int(iso_str[8:10]))
+    year = int(iso_str[:4])
+    month = int(iso_str[5:7])
+    day = int(iso_str[8:10])
+    return datetime.date(year, month, day)
+
 
 def take_closest(myList, myNumber):
     # Source: http://stackoverflow.com/a/12141511
