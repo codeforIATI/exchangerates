@@ -1,11 +1,11 @@
 import csv
 import zipfile
 import requests
-from six import next, BytesIO
 import datetime
 import re
 
 from lxml import etree
+from six import next, BytesIO
 
 from .util import fred_countries_currencies, oecd_countries_currencies
 
