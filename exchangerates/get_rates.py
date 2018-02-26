@@ -15,7 +15,7 @@ OECD_RATES = "http://stats.oecd.org/restsdmx/sdmx.ashx/GetData/MEI_FIN/CCUS.AUS+
 
 def get_fred_rates(outfp, writer):    
     def extract_file(zfo, id_, from_currency, to_currency, freq):
-        fp = 'INTLFXD_csv_2/data/%s' % id_
+        fp = 'INTLFXD_csv_2/data/{}'.format(id_)
         fo = zfo.open(fp)
         reader = csv.reader(fo)
         reader.next()
