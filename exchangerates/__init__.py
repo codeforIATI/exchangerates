@@ -95,9 +95,10 @@ class CurrencyConverter(object):
                 "conversion_rate": self.dates_rates[currency][the_date]
             }
         except KeyError:
-            raise UnknownCurrencyException("Unknown currency: {}".format(
-                currency))
-        
+            msg = "Unknown currency: {}".format(currency)
+            raise UnknownCurrencyException(msg)
+
+
 if __name__ == "__main__":
     """
     Example output
