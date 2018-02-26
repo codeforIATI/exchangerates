@@ -31,11 +31,11 @@ You can also just generate a consolidated file of exchange rates:
 
     python get_rates.py
 
-Result will be at `data/consolidated_rates_.csv`.
+Result will be at `data/consolidated_rates.csv`.
 
 ## Summary of sources
 
-OECD data is monthly, FRED data is daily. FRED data is preferred, but OECD dat is used where FRED data is unavailable.
+OECD data is monthly, FRED data is daily. FRED data is preferred, but OECD data is used where FRED data is unavailable.
 
 Currency | OECD from | OECD to | FRED from | FRED to
 -------- | --------- | ------- | --------- | ----------
