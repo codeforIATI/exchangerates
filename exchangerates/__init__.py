@@ -61,7 +61,7 @@ class CurrencyConverter(object):
             Sort rates into nice dictionary of currency: dates
             """
             def append_path(root, paths):
-                child = root.setdefault(paths[0], {})
+                root.setdefault(paths[0], {})
                 root[paths[0]].update(paths[1])
             rates_dates = {}
             for row in rates_list:
