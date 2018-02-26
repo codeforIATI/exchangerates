@@ -106,8 +106,7 @@ def update_rates(out_filename):
     writer = csv.writer(outfp_f)
     writer.writerow(['Date', 'Rate', 'Currency', 'Frequency', 'Source'])
     get_fred_rates(outfp, writer)
-    outfp_f.close()
-    outfp_f = open(outfp, 'ab')
+
     writer = csv.writer(outfp_f)
     get_oecd_rates(outfp, writer)
     outfp_f.close()
