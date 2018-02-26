@@ -1,7 +1,7 @@
 import csv
 import zipfile
 import requests
-import StringIO
+from six import next, BytesIO
 import datetime
 import re
 
@@ -13,13 +13,29 @@ from .util import fred_countries_currencies, oecd_countries_currencies
 FRED_RATES = "https://fred.stlouisfed.org/categories/94/downloaddata/INTLFXD_csv_2.zip"
 OECD_RATES = "http://stats.oecd.org/restsdmx/sdmx.ashx/GetData/MEI_FIN/CCUS.AUS+AUT+BEL+CAN+CHL+CZE+DNK+EST+FIN+FRA+DEU+GRC+HUN+ISL+IRL+ISR+ITA+JPN+KOR+LVA+LUX+MEX+NLD+NZL+NOR+POL+PRT+SVK+SVN+ESP+SWE+CHE+TUR+GBR+USA+EA19+SDR+NMEC+BRA+CHN+COL+CRI+IND+IDN+RUS+ZAF.M/all?startTime=1950-01"
 
-def get_fred_rates(outfp, writer):    
+
+class ZipExtFileWrapper:
+    def __init__(self, zef):
+        self.zef = zef
+
+    def __iter__(self):
+        while True:
+            try:
+                yield next(self.zef).decode('utf-8')
+            except StopIteration:
+                break
+
+    def close(self):
+        return self.zef.close()
+
+
+def get_fred_rates(outfp, writer):
     def extract_file(zfo, id_, from_currency, to_currency, freq):
         fp = 'INTLFXD_csv_2/data/{}'.format(id_)
-        fo = zfo.open(fp)
+        fo = ZipExtFileWrapper(zfo.open(fp))
         reader = csv.reader(fo)
-        reader.next()
-        country = {True: to_currency, 
+        next(reader)
+        country = {True: to_currency,
                    False: from_currency}[from_currency == "U.S."]
         for row in reader:
             if row[1] == ".":
@@ -33,6 +49,7 @@ def get_fred_rates(outfp, writer):
     def read_files(zfo):
         fo = zfo.open('INTLFXD_csv_2/README_SERIES_ID_SORT.txt')
         for line in fo.readlines():
+            line = line.decode('utf-8')
             if not line.startswith("DEX"):
                 continue
             columns = line.split(';')
@@ -48,7 +65,7 @@ def get_fred_rates(outfp, writer):
                 raise
 
     r = requests.get(FRED_RATES)
-    zfo = zipfile.ZipFile(StringIO.StringIO(r.content))
+    zfo = zipfile.ZipFile(BytesIO(r.content))
     read_files(zfo)
 
 

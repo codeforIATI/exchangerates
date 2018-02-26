@@ -3,6 +3,8 @@ import csv
 import datetime
 import pkg_resources
 
+from six import next
+
 from . import get_rates
 
 
@@ -52,7 +54,7 @@ class CurrencyConverter(object):
                 get_rates.update_rates(source)
             with open(source, "rU") as data:
                 csv_reader = csv.reader(data)
-                csv_reader.next()
+                next(csv_reader)
                 for row in csv_reader:
                     yield row
 
