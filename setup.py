@@ -22,7 +22,8 @@ setup(
     zip_safe=False,
     install_requires=[
         'lxml == 3.7.3',
-        'requests == 2.13.0'
+        'requests == 2.13.0',
+        'six == 1.11.0'
     ],
     entry_points={
     }
