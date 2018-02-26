@@ -104,7 +104,7 @@ if __name__ == "__main__":
     Example output
     """
     converter = CurrencyConverter(update=True)
-    print "Available currencies: {}".format(converter.known_currencies())
-    print converter.closest_rate("USD", datetime.date(2012,7,20))
-    print converter.closest_rate("EUR", datetime.date(2014,7,20))
-    print converter.closest_rate("EUR", datetime.date(2014,7,20))
+    print("Available currencies: {}".format(converter.known_currencies()))
+    print(converter.closest_rate("USD", datetime.date(2012, 7, 20)))
+    print(converter.closest_rate("EUR", datetime.date(2014, 7, 20)))
+    print(converter.closest_rate("EUR", datetime.date(2014, 7, 20)))
