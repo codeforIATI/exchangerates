@@ -22,8 +22,10 @@ def get_fred_rates(outfp, writer):
         country = {True: to_currency, 
                    False: from_currency}[from_currency == "U.S."]
         for row in reader:
-            if row[1] == ".": continue
-            if from_currency == "U.S.": row[1] = round(1/float(row[1]),4)
+            if row[1] == ".":
+                continue
+            if from_currency == "U.S.":
+                row[1] = round(1/float(row[1]), 4)
             outrow = row + [fred_countries_currencies[country], freq, "FRED"]
             writer.writerow(outrow)
         fo.close()
@@ -31,7 +33,8 @@ def get_fred_rates(outfp, writer):
     def read_files(zfo):
         fo = zfo.open('INTLFXD_csv_2/README_SERIES_ID_SORT.txt')
         for line in fo.readlines():
-            if not line.startswith("DEX"): continue
+            if not line.startswith("DEX"):
+                continue
             columns = line.split(';')
             id_ = columns[0].strip()
             from_currency, to_currency = re.match(
