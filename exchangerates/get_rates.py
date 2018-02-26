@@ -40,8 +40,8 @@ def get_fred_rates(outfp, writer):
             freq = columns[3].strip()
             try:
                 extract_file(zfo, id_, from_currency, to_currency, freq)
-            except Exception, inst:
-                print id_, country
+            except Exception as inst:
+                print(id_)
                 raise
 
     r = requests.get(FRED_RATES, stream=True)
