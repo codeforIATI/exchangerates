@@ -47,7 +47,7 @@ def get_fred_rates(outfp, writer):
                 print(id_)
                 raise
 
-    r = requests.get(FRED_RATES, stream=True)
+    r = requests.get(FRED_RATES)
     zfo = zipfile.ZipFile(StringIO.StringIO(r.content))
     read_files(zfo)
 
@@ -77,7 +77,7 @@ def get_oecd_rates(outfp, writer):
         return currencies
 
     def get_OECD_data(writer, currencies_dates):
-        r = requests.get(OECD_RATES, stream=True)
+        r = requests.get(OECD_RATES)
         fp_doc = etree.fromstring(r.content)
         nsmap = {
             "ns": "http://www.SDMX.org/resources/SDMXML/schemas/v2_0/generic"
