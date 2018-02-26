@@ -42,12 +42,13 @@ class CurrencyConverter(object):
             """
             Read CSV file as generator function
             """
-            if self.source == False:
+            if self.source is False:
                 resource_package = __name__
                 resource_path = 'consolidated_rates.csv'
-                source = pkg_resources.resource_filename(resource_package, resource_path)
-            
-            if update == True:
+                source = pkg_resources.resource_filename(
+                    resource_package, resource_path)
+
+            if update is True:
                 get_rates.update_rates(source)
             with open(source, "rU") as data:
                 csv_reader = csv.reader(data)
