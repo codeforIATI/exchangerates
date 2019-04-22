@@ -43,7 +43,7 @@ oecd_countries_currencies = {
     'CHL': 'CLP',
     'CHN': "CNY",
     'COL': 'COP',
-    'CRI': 'CEC',
+    'CRI': 'CRC',
     'CZE': 'CZK',
     'DNK': 'DKK',
     'EA19': 'EUR',
