@@ -10,6 +10,10 @@ Install from PyPI:
 
     pip install exchangerates
 
+[Get your API key for FRED](https://research.stlouisfed.org/useraccount/apikey) and set the environment variable:
+
+    export FRED_API_KEY=YOUR-API-KEY
+
 Create a CurrencyConverter object:
 
     import exchangerates
