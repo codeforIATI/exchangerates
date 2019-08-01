@@ -18,8 +18,22 @@ FRED_DAILY_CATEGORY = 94
 
 
 def get_fred_rates(outfp, writer):
-    def get_rates(id_, from_currency, to_currency, freq):
+    def get_rates(id_, from_currency, to_currency, freq, attempt=1, max_attempts=5):
         print("Retrieving rates from FRED for {}".format(id_))
+        while attempt <= max_attempts:
+            try:
+                get_rates_attempt(id_, from_currency, to_currency, freq)
+                break
+            except json.decoder.JSONDecodeError as inst:
+                if attempt == max_attempts:
+                    print("Failed retrieving rates for that currency after {} attempts.".format(attempt))
+                    raise
+                attempt += 1
+                print("Could not retrieve rates for that currency, retrying (attempt {})...".format(attempt))
+                pass
+
+
+    def get_rates_attempt(id_, from_currency, to_currency, freq):
         r_series = requests.get(FRED_SERIES_OBSERVATIONS_API.format(id_, os.environ['FRED_API_KEY']))
         r_series_json = r_series.json()
         if r_series_json['count'] > r_series_json['limit']:
