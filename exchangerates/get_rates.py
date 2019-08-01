@@ -3,6 +3,7 @@ import requests
 import datetime
 import re
 import json
+import os
 
 from lxml import etree
 
@@ -11,7 +12,6 @@ from .util import fred_countries_currencies, oecd_countries_currencies
 
 OECD_RATES = "http://stats.oecd.org/restsdmx/sdmx.ashx/GetData/MEI_FIN/CCUS.AUS+AUT+BEL+CAN+CHL+CZE+DNK+EST+FIN+FRA+DEU+GRC+HUN+ISL+IRL+ISR+ITA+JPN+KOR+LVA+LUX+MEX+NLD+NZL+NOR+POL+PRT+SVK+SVN+ESP+SWE+CHE+TUR+GBR+USA+EA19+SDR+NMEC+BRA+CHN+COL+CRI+IND+IDN+RUS+ZAF.M/all?startTime=1950-01"
 
-FRED_API_KEY = "0ac22634c3acb260a59293c864df5e34"
 FRED_CATEGORY_API = "https://api.stlouisfed.org/fred/category/series?category_id={}&api_key={}&file_type=json"
 FRED_SERIES_OBSERVATIONS_API = "https://api.stlouisfed.org/fred/series/observations?series_id={}&api_key={}&file_type=json"
 FRED_DAILY_CATEGORY = 94
@@ -20,7 +20,7 @@ FRED_DAILY_CATEGORY = 94
 def get_fred_rates(outfp, writer):
     def get_rates(id_, from_currency, to_currency, freq):
         print("Retrieving rates from FRED for {}".format(id_))
-        r_series = requests.get(FRED_SERIES_OBSERVATIONS_API.format(id_, FRED_API_KEY))
+        r_series = requests.get(FRED_SERIES_OBSERVATIONS_API.format(id_, os.environ['FRED_API_KEY']))
         r_series_json = r_series.json()
         if r_series_json['count'] > r_series_json['limit']:
             raise
@@ -36,7 +36,7 @@ def get_fred_rates(outfp, writer):
             writer.writerow(outrow)
 
     def retrieve_rates():
-        r = requests.get(FRED_CATEGORY_API.format(FRED_DAILY_CATEGORY, FRED_API_KEY))
+        r = requests.get(FRED_CATEGORY_API.format(FRED_DAILY_CATEGORY, os.environ['FRED_API_KEY']))
         categories_json = r.json()
         for series in categories_json["seriess"]:
             # We only want real daily exchange rates
@@ -103,6 +103,13 @@ def get_oecd_rates(outfp, writer, include_all_dates):
 
 
 def update_rates(out_filename, include_all_dates=True):
+    if 'FRED_API_KEY' not in os.environ:
+        raise Exception("""
+
+    Could not find FRED API key.
+    Please get an API key from https://research.stlouisfed.org/useraccount/apikey
+    Then set the environment variable using e.g. EXPORT FRED_API_KEY=YOUR-API-KEY.
+    """)
     outfp = out_filename
     outfp_f = open(outfp, 'w')
     writer = csv.writer(outfp_f)
