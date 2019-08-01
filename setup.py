@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='exchangerates',
-    version='0.2.0',
+    version='0.3.0',
     description="A module to make it easier to handle historical exchange rates",
     long_description="",
     classifiers=[
@@ -21,9 +21,9 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'lxml == 3.7.3',
-        'requests == 2.13.0',
-        'six == 1.11.0'
+        'lxml == 4.4.0',
+        'requests == 2.22.0',
+        'six == 1.12.0'
     ],
     entry_points={
     }
