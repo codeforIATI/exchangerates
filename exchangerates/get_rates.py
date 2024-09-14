@@ -117,24 +117,16 @@ def get_oecd_rates(outfp, writer, include_all_dates):
 
 
 def update_rates(out_filename, include_all_dates=True):
-    if 'FRED_API_KEY' not in os.environ:
-        raise Exception("""
+    """
+    Downloads exchange rates, by default from the Code for IATI
+    IMF Exchange Rates mirror:
+    https://codeforiati.org/imf-exchangerates/imf_exchangerates.csv
+    """
+    url = 'https://codeforiati.org/imf-exchangerates/imf_exchangerates.csv'
+    req = requests.get(url)
 
-    Could not find FRED API key.
-    Please get an API key from https://research.stlouisfed.org/useraccount/apikey
-    Then set the environment variable using e.g. EXPORT FRED_API_KEY=YOUR-API-KEY.
-    """)
-    outfp = out_filename
-    outfp_f = open(outfp, 'w')
-    writer = csv.writer(outfp_f)
-    writer.writerow(['Date', 'Rate', 'Currency', 'Frequency', 'Source'])
-    get_fred_rates(outfp, writer)
-    outfp_f.close()
-
-    outfp_f = outfp_f = open(outfp, 'a')
-    writer = csv.writer(outfp_f)
-    get_oecd_rates(outfp, writer, include_all_dates)
-    outfp_f.close()
+    with open(out_filename, 'w') as f:
+        f.write(req.text)
 
 
 if __name__ == "__main__":
