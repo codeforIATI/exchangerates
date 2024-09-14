@@ -52,7 +52,7 @@ class CurrencyConverter(object):
 
             if update is True:
                 get_rates.update_rates(source)
-            with open(self.source, "rU") as data:
+            with open(self.source, "r") as data:
                 csv_reader = csv.reader(data)
                 next(csv_reader)
                 for row in csv_reader:
