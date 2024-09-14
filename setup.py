@@ -22,7 +22,6 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'lxml >= 4.3.0',
         'requests >= 2.22.0',
         'six >= 1.12.0'
     ],
