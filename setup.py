@@ -15,7 +15,7 @@ setup(
     ],
     author='Mark Brough',
     author_email='mark@brough.io',
-    url='http://github.com/markbrough/exchangerates',
+    url='http://github.com/exchangerates/exchangerates',
     license='MIT',
     packages=find_packages(exclude=['ez_setup', 'examples']),
     namespace_packages=[],
