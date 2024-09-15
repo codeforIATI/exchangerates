@@ -1,11 +1,14 @@
 from setuptools import setup, find_packages
 
+# read the contents of your README file
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='exchangerates',
     version='0.3.5',
     description="A module to make it easier to handle historical exchange rates",
-    long_description="",
     classifiers=[
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
@@ -30,5 +33,7 @@ setup(
         'six >= 1.12.0'
     ],
     entry_points={
-    }
+    },
+    long_description=long_description,
+    long_description_content_type='text/markdown'
 )
