@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='exchangerates',
-    version='0.3.4',
+    version='0.3.5',
     description="A module to make it easier to handle historical exchange rates",
     long_description="",
     classifiers=[
@@ -11,7 +11,11 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         'Programming Language :: Python :: 3.6',
-	'Programming Language :: Python :: 3.7'
+	    'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
     ],
     author='Mark Brough',
     author_email='mark@brough.io',
