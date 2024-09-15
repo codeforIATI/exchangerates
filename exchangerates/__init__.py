@@ -1,7 +1,7 @@
 from bisect import bisect_left
 import csv
 import datetime
-import pkg_resources
+import os
 
 from six import next
 
@@ -47,8 +47,8 @@ class CurrencyConverter(object):
             if self.source is False:
                 resource_package = __name__
                 resource_path = 'consolidated_rates.csv'
-                source = pkg_resources.resource_filename(
-                    resource_package, resource_path)
+                source = os.path.join(__name__,
+                    resource_path)
 
             if update is True:
                 get_rates.update_rates(source)
