@@ -1,4 +1,6 @@
+.DS_Store
 consolidated_rates.csv
+*.sublime-*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
