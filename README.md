@@ -1,8 +1,10 @@
 A module to make it easier to handle historical exchange rates.
 
-Currently combines daily rates from the St Louis Federal Reserve with monthly rates from the OECD.
+Since version 0.3.5, rates are downloaded from a separate scraper hosted by Code for IATI. You can find the code for that scraper on Github:
+https://github.com/codeforiati/imf-exchangerates
 
-See also <http://thedatahub.org/dataset/exchange-rates>
+The data from that scraper is made available here:
+https://codeforiati.org/imf-exchangerates/imf_exchangerates.csv
 
 ## Instructions
 
@@ -10,16 +12,14 @@ Install from PyPI:
 
     pip install exchangerates
 
-[Get your API key for FRED](https://research.stlouisfed.org/useraccount/apikey) and set the environment variable:
-
-    export FRED_API_KEY=YOUR-API-KEY
-
 Create a CurrencyConverter object:
 
     import exchangerates
     converter = exchangerates.CurrencyConverter(update=True)
 
 Note: `update=True` will lead to fresh exchange rates being downloaded.
+
+## Usage
 
 Get a list of the available currencies:
 
@@ -36,9 +36,3 @@ You can also just generate a consolidated file of exchange rates:
     python get_rates.py
 
 Result will be at `data/consolidated_rates.csv`.
-
-## Summary of sources
-
-OECD data is monthly, FRED data is daily.
-
-In version 0.3.0, the default behaviour is changed, so that all FRED exchange rates AND all OECD exchange rates are exported to `data/consolidated_rates.csv`. The `closest_rate` method of `CurrencyConverter` should eventually be updated to return the closest "best" value, where FRED daily rates are preferred over OECD monthly rates.
